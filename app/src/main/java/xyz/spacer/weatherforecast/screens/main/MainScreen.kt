@@ -1,4 +1,4 @@
-package xyz.spacer.weatherforecast.screens
+package xyz.spacer.weatherforecast.screens.main
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
