@@ -1,6 +1,6 @@
 package xyz.spacer.weatherforecast.model
 
-data class Results(
+data class WeatherObject(
     val cid: String,
     val city: String,
     val city_name: String,
