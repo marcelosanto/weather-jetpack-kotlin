@@ -5,9 +5,6 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
-ext {
-    API_KEY = 'c28853a4'
-}
 
 android {
     compileSdk 32
