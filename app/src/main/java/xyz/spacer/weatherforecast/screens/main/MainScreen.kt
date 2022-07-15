@@ -11,7 +11,7 @@ import xyz.spacer.weatherforecast.model.Weather
 
 @Composable
 fun MainScreen(navController: NavHostController, mainViewModel: MainViewModel = hiltViewModel()) {
-    ShowData(mainViewModel)
+    //ShowData(mainViewModel)
 }
 
 @Composable
@@ -28,7 +28,7 @@ fun ShowData(mainViewModel: MainViewModel) {
     if (weatherData.loading == true) {
         CircularProgressIndicator()
     } else if (weatherData.data != null) {
-        Text(text = "MainScreen ${weatherData.data!!.results.toString()}")
+        Text(text = "MainScreen ${weatherData.data!!.results}")
     }
 
 
