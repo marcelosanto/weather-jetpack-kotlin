@@ -90,7 +90,7 @@ private fun ColumnInfo(title: String, info: String, icon: Int) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+
             Image(
                 painterResource(id = icon),
                 contentDescription = "today image",
@@ -99,7 +99,7 @@ private fun ColumnInfo(title: String, info: String, icon: Int) {
                     .height(20.dp),
             )
             Text(text = title, fontSize = 20.sp, color = Color.Gray)
-        }
+
 
         Text(text = info, fontSize = 18.sp, color = Color.DarkGray, fontWeight = FontWeight.Bold)
     }
