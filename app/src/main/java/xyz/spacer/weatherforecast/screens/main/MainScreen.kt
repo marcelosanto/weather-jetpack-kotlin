@@ -1,5 +1,6 @@
 package xyz.spacer.weatherforecast.screens.main
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -43,6 +44,7 @@ fun MainScreen(navController: NavHostController, mainViewModel: MainViewModel = 
     }
 }
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MainScaffold(weather: Weather, navController: NavHostController) {
     Scaffold(topBar = {

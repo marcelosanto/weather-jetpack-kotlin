@@ -1,7 +1,6 @@
 package xyz.spacer.weatherforecast.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -66,9 +65,13 @@ private fun CardTempInfo(data: Weather) {
 
             ColumnInfo("Wind", data.results.wind_speedy, R.drawable.wind)
             DividerRows()
-            ColumnInfo("Humidity", "${data.results.humidity}%",R.drawable.humidity)
+            ColumnInfo("Humidity", "${data.results.humidity}%", R.drawable.humidity)
             DividerRows()
-            ColumnInfo("Currently", data.results.currently.capitalize(Locale.ROOT),R.drawable.sunrise)
+            ColumnInfo(
+                "Currently",
+                data.results.currently.capitalize(Locale.ROOT),
+                R.drawable.sunrise
+            )
         }
     }
 }
@@ -91,14 +94,14 @@ private fun ColumnInfo(title: String, info: String, icon: Int) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-            Image(
-                painterResource(id = icon),
-                contentDescription = "today image",
-                Modifier
-                    .width(20.dp)
-                    .height(20.dp),
-            )
-            Text(text = title, fontSize = 20.sp, color = Color.Gray)
+        Image(
+            painterResource(id = icon),
+            contentDescription = "today image",
+            Modifier
+                .width(20.dp)
+                .height(20.dp),
+        )
+        Text(text = title, fontSize = 20.sp, color = Color.Gray)
 
 
         Text(text = info, fontSize = 18.sp, color = Color.DarkGray, fontWeight = FontWeight.Bold)
