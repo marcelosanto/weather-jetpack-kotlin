@@ -16,7 +16,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -115,12 +118,36 @@ fun weatherDetailRow(weather: Forecast) {
                 painterResource(Constants.getIconsWeather[weather.condition]!!),
                 contentDescription = "weekday icon",
                 Modifier
-                    .width(40.dp)
-                    .height(40.dp)
+                    .size(40.dp)
+
             )
-            Text(text = weather.description)
-            Text(text = "${weather.max}°")
-            Text(text = "${weather.min}°")
+            Surface(
+                modifier = Modifier.padding(0.dp),
+                shape = CircleShape,
+                color = Color(0xFFFFC400)
+            ) {
+                Text(
+                    text = weather.description,
+                    modifier = Modifier.padding(4.dp),
+                    style = MaterialTheme.typography.caption
+                )
+            }
+
+            Text(text = buildAnnotatedString {
+                withStyle(
+                    style = SpanStyle(
+                        color = Color.Blue.copy(alpha = 0.7f),
+                        fontWeight = FontWeight.SemiBold
+                    )
+                ) {
+                    append("${weather.max}°")
+                }
+                withStyle(style = SpanStyle(color = Color.LightGray)) {
+                    append("${weather.min}°")
+                }
+            })
+
+
         }
     }
 }
