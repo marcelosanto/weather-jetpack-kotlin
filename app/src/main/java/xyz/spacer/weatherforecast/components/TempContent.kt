@@ -17,10 +17,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import xyz.spacer.weatherforecast.R
 import xyz.spacer.weatherforecast.model.Weather
-import java.util.*
+import xyz.spacer.weatherforecast.utils.Constants.iconsMaps
 
 @Composable
 fun TempContent(data: Weather) {
+
     Column(
         Modifier
             .padding(4.dp)
@@ -29,7 +30,11 @@ fun TempContent(data: Weather) {
         horizontalAlignment = Alignment.CenterHorizontally,
 
         ) {
-        Image(painterResource(id = R.drawable.sunrise), contentDescription = "")
+
+        Image(
+            painterResource(id = iconsMaps[data.results.condition_slug]!!),
+            contentDescription = ""
+        )
         Text(
             text = "${data.results.temp}º",
             color = Color.DarkGray,
@@ -63,15 +68,11 @@ private fun CardTempInfo(data: Weather) {
 
             ) {
 
-            ColumnInfo("Wind", data.results.wind_speedy, R.drawable.wind)
-            DividerRows()
-            ColumnInfo("Humidity", "${data.results.humidity}%", R.drawable.humidity)
-            DividerRows()
-            ColumnInfo(
-                "Currently",
-                data.results.currently.capitalize(Locale.ROOT),
-                R.drawable.sunrise
-            )
+            ColumnInfo("${data.results.humidity}%", R.drawable.humidity)
+
+            ColumnInfo(data.results.wind_speedy, R.drawable.wind)
+
+
         }
     }
 }
@@ -88,22 +89,24 @@ private fun DividerRows() {
 }
 
 @Composable
-private fun ColumnInfo(title: String, info: String, icon: Int) {
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+private fun ColumnInfo(info: String, icon: Int) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceEvenly
     ) {
 
         Image(
             painterResource(id = icon),
             contentDescription = "today image",
-            Modifier
+            modifier = Modifier
+                .padding(horizontal = 10.dp)
                 .width(20.dp)
                 .height(20.dp),
         )
-        Text(text = title, fontSize = 20.sp, color = Color.Gray)
-
-
-        Text(text = info, fontSize = 18.sp, color = Color.DarkGray, fontWeight = FontWeight.Bold)
+        Text(
+            text = info,
+            fontSize = 18.sp,
+            color = Color.DarkGray,
+            fontWeight = FontWeight.SemiBold
+        )
     }
 }
