@@ -20,6 +20,7 @@ import xyz.spacer.weatherforecast.components.TempContent
 import xyz.spacer.weatherforecast.components.TodayContent
 import xyz.spacer.weatherforecast.data.DataOrException
 import xyz.spacer.weatherforecast.model.Weather
+import xyz.spacer.weatherforecast.navigation.WeatherScreens
 import xyz.spacer.weatherforecast.widgets.WeatherAppBar
 import xyz.spacer.weatherforecast.widgets.weatherDetailRow
 
@@ -50,6 +51,9 @@ fun MainScaffold(weather: Weather, navController: NavHostController) {
         WeatherAppBar(
             title = weather.results.city,
             navController = navController,
+            onAddActionClicked = {
+                navController.navigate(WeatherScreens.SearchScreen.name)
+            }
         ) {
             Log.d("BUTTON", "MainScaffold: ButtonClicked")
         }
