@@ -6,7 +6,7 @@ object Constants {
     const val BASE_URL = "https://api.hgbrasil.com/"
     const val API_KEY = "0e118d1233"
 
-    val iconsMaps = mapOf(
+    val getIconsWeather = mapOf(
         "storm" to R.drawable.storm,
         "snow" to R.drawable.snow,
         "hail" to R.drawable.hail,

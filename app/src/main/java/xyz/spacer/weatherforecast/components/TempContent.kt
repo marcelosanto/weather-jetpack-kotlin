@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import xyz.spacer.weatherforecast.R
 import xyz.spacer.weatherforecast.model.Weather
-import xyz.spacer.weatherforecast.utils.Constants.iconsMaps
+import xyz.spacer.weatherforecast.utils.Constants.getIconsWeather
 
 @Composable
 fun TempContent(data: Weather) {
@@ -32,7 +32,7 @@ fun TempContent(data: Weather) {
         ) {
 
         Image(
-            painterResource(id = iconsMaps[data.results.condition_slug]!!),
+            painterResource(id = getIconsWeather[data.results.condition_slug]!!),
             contentDescription = ""
         )
         Text(
