@@ -30,6 +30,7 @@ import xyz.spacer.weatherforecast.navigation.WeatherScreens
 
 @Composable
 fun WeatherSplashScreen(navController: NavHostController) {
+    val defaultCity = "Vitoria,ES"
 
     val scale = remember {
         Animatable(0f)
@@ -46,7 +47,7 @@ fun WeatherSplashScreen(navController: NavHostController) {
             ))
 
         delay(2000L)
-        navController.navigate(WeatherScreens.MainScreen.name)
+        navController.navigate(WeatherScreens.MainScreen.name + "/$defaultCity")
     })
 
     Surface(

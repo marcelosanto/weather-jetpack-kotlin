@@ -15,7 +15,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import xyz.spacer.weatherforecast.navigation.WeatherScreens
 import xyz.spacer.weatherforecast.widgets.WeatherAppBar
 
 @Composable
@@ -41,9 +42,16 @@ fun SearchScreen(navController: NavController) {
         Surface() {
             Column(
                 verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = CenterHorizontally
             ) {
-                Text("Search...")
+                SearchBar(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .align(CenterHorizontally)
+                ) { cityName ->
+                    navController.navigate(WeatherScreens.MainScreen.name + "/$cityName")
+                }
             }
         }
     }
@@ -52,18 +60,22 @@ fun SearchScreen(navController: NavController) {
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchBar(
+    modifier: Modifier,
     onSearch: (String) -> Unit = {}
 ) {
     val searchQueryState = rememberSaveable { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
-    val valid = remember(searchQueryState.value) { searchQueryState.value.trim().isNotBlank() }
+    val valid = remember(searchQueryState.value) { searchQueryState.value.trim().isNotEmpty() }
 
     Column {
         CommonTextField(
             valueState = searchQueryState,
             placeholder = "Vitória",
             onAction = KeyboardActions {
-
+                if (!valid) return@KeyboardActions
+                onSearch(searchQueryState.value.trim())
+                searchQueryState.value = ""
+                keyboardController?.hide()
             }
         )
     }

@@ -25,7 +25,13 @@ import xyz.spacer.weatherforecast.widgets.WeatherAppBar
 import xyz.spacer.weatherforecast.widgets.weatherDetailRow
 
 @Composable
-fun MainScreen(navController: NavHostController, mainViewModel: MainViewModel = hiltViewModel()) {
+fun MainScreen(
+    navController: NavHostController,
+    mainViewModel: MainViewModel = hiltViewModel(),
+    city: String?
+) {
+
+    Log.d("BACK", "MainScreen: $city")
 
 
     val weatherData =
@@ -34,7 +40,7 @@ fun MainScreen(navController: NavHostController, mainViewModel: MainViewModel = 
                 loading = true
             )
         ) {
-            value = mainViewModel.getWeatherData(city = "Vitoria,ES")
+            value = mainViewModel.getWeatherData(city = city.toString())
         }.value
 
     if (weatherData.loading == true) {
