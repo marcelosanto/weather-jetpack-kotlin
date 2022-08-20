@@ -117,7 +117,7 @@ fun ShowSettingDropDownMenu(showDialog: MutableState<Boolean>, navController: Na
                         modifier = Modifier.clickable {
                             navController.navigate(
                                 when (text) {
-                                    "Favorites" -> WeatherScreens.AboutScreen.name
+                                    "Favorites" -> WeatherScreens.FavoriteScreen.name
                                     "Settings" -> WeatherScreens.SettingsScreen.name
                                     else -> WeatherScreens.AboutScreen.name
 
