@@ -7,8 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.produceState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,6 +20,7 @@ import xyz.spacer.weatherforecast.components.TodayContent
 import xyz.spacer.weatherforecast.data.DataOrException
 import xyz.spacer.weatherforecast.model.Weather
 import xyz.spacer.weatherforecast.navigation.WeatherScreens
+import xyz.spacer.weatherforecast.screens.settings.SettingsViewModel
 import xyz.spacer.weatherforecast.widgets.WeatherAppBar
 import xyz.spacer.weatherforecast.widgets.weatherDetailRow
 
@@ -28,27 +28,43 @@ import xyz.spacer.weatherforecast.widgets.weatherDetailRow
 fun MainScreen(
     navController: NavHostController,
     mainViewModel: MainViewModel = hiltViewModel(),
+    settingsViewModel: SettingsViewModel = hiltViewModel(),
     city: String?
 ) {
-    val weatherData =
-        produceState<DataOrException<Weather, Boolean, Exception>>(
-            initialValue = DataOrException(
-                loading = true
-            )
-        ) {
-            value = mainViewModel.getWeatherData(city = city.toString())
-        }.value
-
-    if (weatherData.loading == true) {
-        CircularProgressIndicator()
-    } else if (weatherData.data != null) {
-        MainScaffold(weather = weatherData.data!!, navController)
+    val unitFromDb = settingsViewModel.unitList.collectAsState().value
+    var unit by remember {
+        mutableStateOf("metric")
     }
+    var isMetric by remember {
+        mutableStateOf(false)
+    }
+
+    if (!unitFromDb.isEmpty()) {
+        unit = unitFromDb[0].unit.split(" ")[0].lowercase()
+        isMetric = unit == "metric"
+
+        val weatherData =
+            produceState<DataOrException<Weather, Boolean, Exception>>(
+                initialValue = DataOrException(
+                    loading = true
+                )
+            ) {
+                value = mainViewModel.getWeatherData(city = city.toString())
+            }.value
+
+        if (weatherData.loading == true) {
+            CircularProgressIndicator()
+        } else if (weatherData.data != null) {
+            MainScaffold(weather = weatherData.data!!, navController, unit = unit)
+        }
+    }
+
+
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun MainScaffold(weather: Weather, navController: NavHostController) {
+fun MainScaffold(weather: Weather, navController: NavHostController, unit: String) {
     Scaffold(topBar = {
         WeatherAppBar(
             title = weather.results.city,
@@ -62,7 +78,7 @@ fun MainScaffold(weather: Weather, navController: NavHostController) {
     }
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            TempContent(data = weather)
+            TempContent(data = weather, unit = unit)
             TodayContent(data = weather)
             Divider(
                 modifier = Modifier

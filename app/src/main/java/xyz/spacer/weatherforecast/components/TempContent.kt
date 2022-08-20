@@ -20,7 +20,7 @@ import xyz.spacer.weatherforecast.model.Weather
 import xyz.spacer.weatherforecast.utils.Constants.getIconsWeather
 
 @Composable
-fun TempContent(data: Weather) {
+fun TempContent(data: Weather, unit: String) {
 
     Column(
         Modifier
@@ -35,8 +35,13 @@ fun TempContent(data: Weather) {
             painterResource(id = getIconsWeather[data.results.condition_slug]!!),
             contentDescription = ""
         )
+
+        val temp = if (unit == "metric") data.results.temp else {
+            (data.results.temp * 1.8) + 32
+        }
+
         Text(
-            text = "${data.results.temp}º",
+            text = "${temp}º",
             color = Color.DarkGray,
             fontSize = 50.sp,
             fontWeight = FontWeight.Bold
